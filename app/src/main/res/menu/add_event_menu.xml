@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    I don't know why, but the save button goes invisible when the-->
+<!--    program is run. If you have any advice, please let me know!-->
+    <item
+        android:id="@+id/saveButtonSymbol"
+        android:title="@string/saveButtonTitle"
+        app:actionLayout="@layout/save_button_layout"
+        app:actionViewClass="android.widget.Button"
+        app:showAsAction="always"
+        />
+</menu>

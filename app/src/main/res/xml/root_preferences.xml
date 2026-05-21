@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:key="theme_pref"
+        android:defaultValue="false"
+        android:title="@string/theme_pref_Title"
+        android:summary="@string/theme_pref_Description"
+        />
+<!--    <ListPreference-->
+<!--        android:key="first_day_pref"-->
+<!--        android:defaultValue="new_first"-->
+<!--        android:entries="@array/first_day_pref_order"-->
+<!--        android:title="First Day of Week"-->
+<!--        />-->
+</androidx.preference.PreferenceScreen>
