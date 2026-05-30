@@ -79,5 +79,8 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <color name="cellBackgroundColor">@color/white</color>
+    <color name="cellOutlineColor">@color/black</color>
+
     <style name="Theme.CS360FinalProjectByJasonBarry" parent="Base.Theme.CS360FinalProjectByJasonBarry" />
 </resources>

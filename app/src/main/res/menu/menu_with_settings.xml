@@ -8,4 +8,11 @@
         app:showAsAction="ifRoom"
         android:theme="@style/BarBackgroundColor"
         />
+
+    <item
+        android:id="@+id/editMenuButton"
+        android:title="@string/editButtonText"
+        app:actionLayout="@layout/edit_button_layout"
+        app:showAsAction="always"
+        />
 </menu>

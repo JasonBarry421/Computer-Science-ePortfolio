@@ -79,4 +79,7 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <color name="cellBackgroundColor">@color/black</color>
+    <color name="cellOutlineColor">@color/white</color>
 </resources>

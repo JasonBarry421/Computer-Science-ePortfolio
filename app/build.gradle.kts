@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.cs360finalprojectbyjasonbarry"
+    namespace = "com.example.EventCalendarMobileApplication"
     compileSdk = 34
 
     defaultConfig {

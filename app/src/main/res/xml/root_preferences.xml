@@ -13,4 +13,11 @@
 <!--        android:entries="@array/first_day_pref_order"-->
 <!--        android:title="First Day of Week"-->
 <!--        />-->
+
+    <Preference
+        android:key="logout_pref"
+        android:defaultValue="false"
+        android:title="Logout?"
+        android:summary="Log out of the application"
+        />
 </androidx.preference.PreferenceScreen>
