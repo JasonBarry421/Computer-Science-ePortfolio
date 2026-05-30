@@ -1,5 +1,9 @@
 # Computer-Science-ePortfolio
 
+# Code Review - Video Link
+
+https://youtu.be/S9b4sGuwqLE
+
 # Narrative - Software Engineering and Design Enhancement
 
 This artifact is an enhanced version of the Event Calendar application originally developed as the final project for CS-360: Mobile Architecture and Programming. The original application was created in 2024 and was designed as a mobile calendar system that allowed users to create, view, and update scheduled events. The enhanced version expands upon the original implementation through improvements to the application’s user interface, event visualization system, and overall software structure. Most notably, the enhancement introduces a redesigned Monthly View capable of displaying multiple events per day as well as a new Daily View that provides detailed visualization and interaction with time-based event data.
