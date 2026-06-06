@@ -31,7 +31,7 @@ Through the enhancement process, I developed a greater appreciation for the impo
 
 
 
-# Narrative - Algorithms and Data Structure Enhancement
+# Narrative - Databases
 
 This artifact is an enhanced version of the Event Calendar application originally developed as the final project for CS-360: Mobile Architecture and Programming. The original application was created in 2024 and was designed as a mobile calendar system that allowed users to create, view, and update scheduled events. To enable these features, as well as provide support for multiple user accounts, the application used an SQLite database. Although SQLite provided a lightweight and reliable solution for local data storage, it had several limitations when applied to a more scalable, multi-user system.
 I selected this artifact because it provided an opportunity to improve both the functionality and security of the application's database architecture. Most notably, because SQLite is a file-based local storage system, the application's data was tied directly to a single device. As a result, uninstalling or resetting the application could lead to complete data loss, reducing reliability across multiple devices. To address these limitations, the application was altered to use Firebase Firestore, a cloud-based database solution. These changes also made future enhancements, such as email-triggered event updates, significantly easier to implement. This alteration also reduced the application’s exposure to traditional SQL injection vulnerabilities by replacing SQL-based queries with Firestore's document-based data model.
