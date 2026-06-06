@@ -17,6 +17,7 @@ import androidx.core.app.NavUtils;
 import com.example.EventCalendarMobileApplication.Login.View.LoginActivity;
 import com.example.EventCalendarMobileApplication.R;
 import com.example.EventCalendarMobileApplication.Session;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SettingsActivity extends AppCompatActivity {
@@ -91,12 +92,16 @@ public class SettingsActivity extends AppCompatActivity {
 
             // Finds and Listens for Logout Preference
             Preference logoutPref = findPreference("logout_pref");
-            if (logoutPref != null){
+            if (logoutPref != null) {
                 logoutPref.setOnPreferenceClickListener(preference -> {
-                    // If Clicked, Disables Current User ID
-                    Session.currentUserId = -1;
 
-                    // Goes to Login Screen
+                    // Signs Out of Account
+                    FirebaseAuth.getInstance().signOut();
+
+                    // Clears local user ID
+                    Session.currentUserId = null;
+
+                    // Returns to login screen
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

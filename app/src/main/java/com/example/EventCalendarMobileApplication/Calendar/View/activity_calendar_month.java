@@ -25,7 +25,6 @@ import com.example.EventCalendarMobileApplication.R;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class activity_calendar_month extends AppCompatActivity implements CalendarAdapter.onDayClickListener {
     ImageButton mAddEventButton;
@@ -33,6 +32,7 @@ public class activity_calendar_month extends AppCompatActivity implements Calend
     public static RecyclerView calendarRecyclerView;
     private EventViewModel eventViewModel;
     private Event selectedEvent;
+    private CalendarAdapter calendarAdapter;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -73,28 +73,27 @@ public class activity_calendar_month extends AppCompatActivity implements Calend
 
     @SuppressLint("NotifyDataSetChanged")
     private void setCalendarAdapter() {
-        ArrayList<LocalDate> daysInMonth = daysInMonthArray(selectedDate);
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
+        ArrayList<LocalDate> daysInMonth =
+                daysInMonthArray(selectedDate);
+
+        calendarAdapter =
+                new CalendarAdapter(daysInMonth, this);
 
         calendarRecyclerView.post(() -> {
-            // Set Row Height
+
             int height = calendarRecyclerView.getHeight();
             int rowHeight = height / 6;
 
             calendarAdapter.setRowHeight(rowHeight);
 
-            // Sets Grid Layout for Columns
-            calendarRecyclerView.setLayoutManager(new GridLayoutManager(this, 7));
-            calendarRecyclerView.setAdapter(calendarAdapter);
+            calendarRecyclerView.setLayoutManager(
+                    new GridLayoutManager(this, 7));
 
+            calendarRecyclerView.setAdapter(calendarAdapter);
         });
 
-        // Opens Database, Reads the List of Events, then Closes It
-        List<Event> events = eventViewModel.readEvents();
-
-        // Sets Events on the Calendar Accordingly
-        calendarAdapter.setEvents(events);
+        eventViewModel.readEvents(events -> calendarAdapter.setEvents(events));
     }
 
     @Override

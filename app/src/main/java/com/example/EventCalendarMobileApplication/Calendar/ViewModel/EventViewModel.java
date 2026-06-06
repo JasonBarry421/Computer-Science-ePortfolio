@@ -2,29 +2,34 @@ package com.example.EventCalendarMobileApplication.Calendar.ViewModel;
 
 import android.content.Context;
 
-import com.example.EventCalendarMobileApplication.Calendar.Model.Event;
 import com.example.EventCalendarMobileApplication.Calendar.Repository.EventRepository;
 import com.example.EventCalendarMobileApplication.Session;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 public class EventViewModel {
 
     private EventRepository repository;
 
     public EventViewModel(Context context) {
-        repository = new EventRepository(context);
+        repository = new EventRepository();
+    }
+    public void addEvent(Map<String, Object> event, OnSuccessListener<DocumentReference> callback) {
+        repository.addEvent(event, callback);
     }
 
-    public void addEvent(Event event) {
-        repository.addEvent(event);
+    public void readEvents(EventRepository.FirestoreCallback callback) {
+        repository.readEvents(Session.currentUserId, callback);
     }
-
-    public ArrayList<Event> readEvents() {
-        return repository.readEvents(Session.currentUserId);
+    public void eventsForDate(String date, EventRepository.FirestoreCallback callback) {
+        repository.eventsForDate(date, Session.currentUserId, callback);
     }
-
-    public ArrayList<Event> eventsForDate(String date) {
-        return repository.eventsForDate(date, Session.currentUserId);
+    public void updateEvent(String id, Map<String,Object> data) {
+        repository.updateEvent(id, data);
+    }
+    public void deleteEvent(String id) {
+        repository.deleteEvent(id);
     }
 }

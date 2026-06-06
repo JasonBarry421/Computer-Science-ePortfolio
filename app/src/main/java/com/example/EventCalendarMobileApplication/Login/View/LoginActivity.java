@@ -1,47 +1,42 @@
 package com.example.EventCalendarMobileApplication.Login.View;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.EventCalendarMobileApplication.Calendar.View.activity_calendar_daily;
 import com.example.EventCalendarMobileApplication.R;
 import com.example.EventCalendarMobileApplication.Session;
 import com.example.EventCalendarMobileApplication.Calendar.View.activity_calendar_month;
-import com.example.EventCalendarMobileApplication.Login.Repository.LoginRepository;
 import com.example.EventCalendarMobileApplication.databinding.ActivityLoginBinding;
 import com.example.EventCalendarMobileApplication.Login.ViewModel.LoginViewModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
-    private ActivityLoginBinding binding;
     Button mCreateNewAccountButton;
-    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LoginRepository loginRE = new LoginRepository(this);
-
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setTitle("Sign-In");
 
-        loginViewModel = new LoginViewModel(loginRE);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
@@ -82,43 +77,59 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.authenticateUser(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                        passwordEditText.getText().toString(),
+                        success -> {
+
+                            if (success) {
+                                // login success logic
+                                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
             }
-            return false;
+            return true;
         });
 
         loginButton.setOnClickListener(v -> {
 
-            // Transforms Edit Text into Strings for Database Comparison
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            // Attempts to login with user provided info (if valid)
-            try{
-                int userID = loginViewModel.authenticateUser(username, password);
-                if (userID != -1) {
-                    Session.currentUserId = userID;
+            try {
+                loginViewModel.authenticateUser(username, password, success -> {
 
-                    String sessionID = String.valueOf(Session.currentUserId);
+                    if (success) {
 
-                    Intent EnterMonthlyCalendarIntent = getIntent();
-                    EnterMonthlyCalendarIntent = new Intent(LoginActivity.this, activity_calendar_month.class);
-                    startActivity(EnterMonthlyCalendarIntent);
-                } else {
-                    // Outputs a message if the information isn't valid
-                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-                }
-            }catch (Exception e){
-                    Intent RefreshIntent = getIntent();
-                    RefreshIntent = new Intent(LoginActivity.this, LoginActivity.class);
-                    startActivity(RefreshIntent);
+                        // Sets the Current User ID (to ensure Events are specifically associated with that User)
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            Session.currentUserId = user.getUid();
+                        }
+
+                        // Displays Success Message
+                        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+
+                        // Enters to Monthly Calendar Screen
+                        startActivity(new Intent(this, activity_calendar_month.class));
+                        finish();
+
+                    } else {
+                        // Outputs a message if the information isn't valid
+                        Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (Exception e) {
+                // Refreshes Login Screen
+                Intent RefreshIntent = new Intent(LoginActivity.this, LoginActivity.class);
+                startActivity(RefreshIntent);
             }
         });
 
         mCreateNewAccountButton = findViewById(R.id.createNewAccount);
         mCreateNewAccountButton.setOnClickListener(view -> {
-            Intent EnterNewAccountIntent = getIntent();
-            EnterNewAccountIntent = new Intent(LoginActivity.this, createNewAccount.class);
+            Intent EnterNewAccountIntent = new Intent(LoginActivity.this, createNewAccount.class);
             startActivity(EnterNewAccountIntent);
         });
     }

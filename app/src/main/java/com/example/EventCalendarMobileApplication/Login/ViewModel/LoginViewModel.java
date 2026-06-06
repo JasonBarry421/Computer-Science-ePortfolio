@@ -9,56 +9,73 @@ import com.example.EventCalendarMobileApplication.R;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private LoginRepository loginRepository;
+    private final LoginRepository repository = new LoginRepository();
 
-    public LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
-    }
+    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
 
     public LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
 
-    // Authenticate User Information to Log In to their Account
-    public int authenticateUser(String username, String password) {
-        return loginRepository.authenticateUser(username, password);
+    public LoginViewModel() {
     }
 
-    // Without Phone Number (for existing account login)
+    // ---------------------------
+    // LOGIN
+    // ---------------------------
+    public void authenticateUser(String username, String password, LoginRepository.AuthCallback callback) {
+        repository.authenticateUser(username, password, callback);
+    }
+
+    // ---------------------------
+    // CREATE ACCOUNT
+    // ---------------------------
+    public void createAccount(String username, String password, String phone, LoginRepository.AuthCallback callback) {
+        repository.createAccount(username, password, phone, callback);
+    }
+
+    // ---------------------------
+    // FORM VALIDATION (LOGIN)
+    // ---------------------------
     public void loginDataChanged(String username, String password) {
+
         if (!isUserNameValid(username)) {
             loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
-        } else if (!isPasswordValid(password)) {
+        }
+        else if (!isPasswordValid(password)) {
             loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
-        } else {
+        }
+        else {
             loginFormState.setValue(new LoginFormState(true));
         }
     }
 
-    // With Phone Number (for new account login)
-    public void loginDataChanged(String username, String password, String phoneNumber) {
+    // ---------------------------
+    // FORM VALIDATION (SIGN UP)
+    // ---------------------------
+    public void signupDataChanged(String username, String password, String phoneNumber) {
+
         if (!isUserNameValid(username)) {
             loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
-        } else if (!isPasswordValid(password)) {
+        }
+        else if (!isPasswordValid(password)) {
             loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
-        } else if (!isPhoneNumberValid(phoneNumber)) {
+        }
+        else if (!isPhoneNumberValid(phoneNumber)) {
             loginFormState.setValue(new LoginFormState(null, R.string.invalid_phoneNumber));
-        } else {
+        }
+        else {
             loginFormState.setValue(new LoginFormState(true));
         }
     }
+
+    // ---------------------------
+    // VALIDATION HELPERS
+    // ---------------------------
 
     // A placeholder username validation check
-    private boolean isUserNameValid(String username) {
-        if (username == null) {
-            return false;
-        }
-        if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
-        } else {
-            return !username.trim().isEmpty();
-        }
+    private boolean isUserNameValid(String email) {
+        return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     // A placeholder password validation check
@@ -67,7 +84,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     // A placeholder Phone Number validation check
-    private boolean isPhoneNumberValid(String phoneNumber){
+    private boolean isPhoneNumberValid(String phoneNumber) {
         return phoneNumber != null && phoneNumber.trim().length() == 10;
     }
 }

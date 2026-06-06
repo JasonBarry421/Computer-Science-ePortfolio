@@ -3,13 +3,9 @@ package com.example.EventCalendarMobileApplication.Calendar.View;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,8 +19,6 @@ import androidx.core.app.NavUtils;
 
 import com.example.EventCalendarMobileApplication.Calendar.Model.Event;
 import com.example.EventCalendarMobileApplication.Calendar.ViewModel.EventViewModel;
-import com.example.EventCalendarMobileApplication.Calendar_Database;
-import com.example.EventCalendarMobileApplication.Login.View.createNewAccount;
 import com.example.EventCalendarMobileApplication.R;
 import com.example.EventCalendarMobileApplication.Session;
 
@@ -32,13 +26,14 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class addEventActivity extends AppCompatActivity {
     SwitchCompat mAllDaySwitch;
@@ -58,7 +53,6 @@ public class addEventActivity extends AppCompatActivity {
     int currentMonthNum;
     boolean is24HourView;
     String amPM;
-    List<String> conflicts = new ArrayList<>();
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -69,9 +63,9 @@ public class addEventActivity extends AppCompatActivity {
         initWidgets();
 
         /*
-        ****************************************
-        *****        ALL DAY SWITCH        *****
-        ****************************************/
+         ****************************************
+         *****        ALL DAY SWITCH        *****
+         ****************************************/
 
         mAllDaySwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
 
@@ -275,8 +269,7 @@ public class addEventActivity extends AppCompatActivity {
         });
     }
 
-    private void initWidgets()
-    {
+    private void initWidgets() {
         mTitleET = findViewById(R.id.addEventTitle);
         mAllDaySwitch = findViewById(R.id.allDaySwitch);
         mStartDateEditText = findViewById(R.id.startDateEditText);
@@ -297,149 +290,169 @@ public class addEventActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.add_event_menu, menu);
+        getMenuInflater().inflate(R.menu.add_event_menu, menu);
 
         MenuItem item = menu.findItem(R.id.saveButtonSymbol);
         View actionView = item.getActionView();
 
         if (actionView != null) {
-
             Button saveButton = actionView.findViewById(R.id.saveButton);
-
-            // Listens for Save Button Click
-            saveButton.setOnClickListener(v -> {
-                if (item.getItemId() == R.id.saveButtonSymbol) {
-
-                    // Transforms everything back into strings (instead of Edit Texts)
-                    String mTitle = mTitleET.getText().toString();
-                    String startDate = mStartDateEditText.getText().toString();
-                    String endDate = mEndDateEditText.getText().toString();
-                    String startTime = mStartTimeEditText.getText().toString();
-                    String endTime = mEndTimeEditText.getText().toString();
-
-                    // Gets Dates for Checking if the End Date is after the Start Date
-                    DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("E, MMM dd, yyyy");
-                    LocalDate parsedStartDate = LocalDate.parse(startDate, displayFormatter);
-                    LocalDate parsedEndDate = LocalDate.parse(endDate, displayFormatter);
-
-                    // If the End Date is before the Start Date
-                    if (parsedEndDate.isBefore(parsedStartDate)) {
-                        // Displays Error Message
-                        Toast.makeText(addEventActivity.this, "End date must be after start date.", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    // Formats the Start and End Dates so they're ready for the Database
-                    DateTimeFormatter databaseFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                    startDate = parsedStartDate.format(databaseFormatter);
-                    endDate = parsedEndDate.format(databaseFormatter);
-
-                    // Gets Times for Checking if the End Time is after the Start Time
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
-                    LocalTime sTime = LocalTime.parse(startTime, formatter);
-                    LocalTime eTime = LocalTime.parse(endTime, formatter);
-
-                    // If the End Time is before the Start Time
-                    if (eTime.isBefore(sTime)) {
-                        // Displays Error Message
-                        Toast.makeText(addEventActivity.this, "End time must be after start time.", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    // Gives a Default Event Name if none was entered
-                    if (mTitle.isEmpty()){
-                        mTitle = "Event on " + startDate + " at " + startTime;
-                    }
-
-                    // Transforms Dates and Times into Date Time objects (for Overlap Checking)
-                    LocalDateTime newStart = LocalDateTime.of(parsedStartDate, sTime);
-                    LocalDateTime newEnd = LocalDateTime.of(parsedEndDate, eTime);
-                    ContentValues values = new ContentValues();
-
-                    // Get Empty Values
-                    String sqlTitle = Calendar_Database.EventTable.COL_TITLE;
-                    String sqlStartDate = Calendar_Database.EventTable.START_DATE;
-                    String sqlEndDate = Calendar_Database.EventTable.END_DATE;
-                    String sqlStartTime = Calendar_Database.EventTable.START_TIME;
-                    String sqlEndTime = Calendar_Database.EventTable.END_TIME;
-
-                    // Put New Values
-                    values.put(Calendar_Database.EventTable.COL_USER_ID, Session.currentUserId);
-                    values.put(sqlTitle, mTitle);
-                    values.put(sqlStartDate, startDate);
-                    values.put(sqlEndDate, endDate);
-                    values.put(sqlStartTime, startTime);
-                    values.put(sqlEndTime, endTime);
-
-                    // Creates a List of Events based on the Start Date
-                    EventViewModel eventViewModel = new EventViewModel(this);
-                    ArrayList<Event> listOfEvents = eventViewModel.readEvents();
-
-                    // Searches through the Event List
-                    for (Event e : listOfEvents) {
-
-                        // Gets the Start Date and Start Time of Each Event in the List
-                        LocalDateTime existingStart = LocalDateTime.of(e.getStartDate(), e.getStartTime());
-
-                        // Gets the End Date and End Time of Each Event in the List
-                        LocalDateTime existingEnd = LocalDateTime.of(e.getEndDate(), e.getEndTime());
-
-                        // Checks if an Overlap Occurs
-                        boolean overlaps = newStart.isBefore((existingEnd)) && newEnd.isAfter((existingStart));
-
-                        // If an overlap occurs
-                        if (overlaps) {
-                            conflicts.add(e.getTitle());
-                        }
-                    }
-                    // If overlaps occur
-                    if (!conflicts.isEmpty()){
-                        // Build Error Message
-                        StringBuilder message = new StringBuilder();
-
-                        message.append("This event overlaps with:\n\n");
-
-                        // Display All Events which conflict
-                        for (String title : conflicts) { message.append("• ").append(title).append("\n");}
-
-                        message.append("\nAdd anyway?");
-
-                        // Displays Conflict Alert Dialog Box
-                        new AlertDialog.Builder(addEventActivity.this)
-                                .setTitle("Event Conflict")
-                                .setMessage(message.toString())
-                                // Sets the Positive Button if the User still WANTS to Save the Event
-                                .setPositiveButton("Add Event", (dialog, which) -> {saveEvent(values);})
-                                // Sets the Negative Button if the User DOESN'T WANT to Save the Event
-                                .setNegativeButton("Cancel", (dialog, which) -> {dialog.dismiss();})
-                                .show();
-
-                        return;
-                    }
-                    saveEvent(values);
-                }
-            });
+            saveButton.setOnClickListener(v -> handleSaveEvent());
         }
+
         return true;
     }
 
-    private void saveEvent(ContentValues values) {
+    private void handleSaveEvent() {
 
-        Calendar_Database calendarDatabase = new Calendar_Database(this);
+        String mTitle = mTitleET.getText().toString();
+        String startDate = mStartDateEditText.getText().toString();
+        String endDate = mEndDateEditText.getText().toString();
+        String startTime = mStartTimeEditText.getText().toString();
+        String endTime = mEndTimeEditText.getText().toString();
 
-        // Opens the Database
-        SQLiteDatabase db = calendarDatabase.getWritableDatabase();
+        // Format Start and End Dates
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, MMM dd, yyyy");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
 
-        // Inserts the New Event
-        db.insert(Calendar_Database.EventTable.TABLE, null, values);
+        // As Local Dates
+        LocalDate parsedStartDate = LocalDate.parse(startDate, inputFormatter);
+        LocalDate parsedEndDate = LocalDate.parse(endDate, inputFormatter);
 
-        // Closes the Database
-        db.close();
+        // As Strings
+        String cleanStartDate = parsedStartDate.format(outputFormatter);
+        String cleanEndDate = parsedEndDate.format(outputFormatter);
 
-        // Returns to the Monthly Calendar
-        Intent returnToCalendarIntent = new Intent(this, activity_calendar_month.class);
-        startActivity(returnToCalendarIntent);
+        // Display Error Message if the End Date is before the Start Date
+        if (parsedEndDate.isBefore(parsedStartDate)) {
+            Toast.makeText(this, "End date must be after start date.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Format Start and End Times
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
+        LocalTime sTime = LocalTime.parse(startTime, timeFormatter);
+        LocalTime eTime = LocalTime.parse(endTime, timeFormatter);
+
+        // Display Error Message if the End Time is before the Start Time
+        if (eTime.isBefore(sTime)) {
+            Toast.makeText(this, "End time must be after start time.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Set a Default Title if none is provided
+        if (mTitle.isEmpty()) {
+            mTitle = "Event on " + cleanStartDate + " at " + startTime;
+        }
+
+        // Get new Start and End Dates
+        LocalDateTime newStart = LocalDateTime.of(parsedStartDate, sTime);
+        LocalDateTime newEnd = LocalDateTime.of(parsedEndDate, eTime);
+
+        Map<String, Object> event = new HashMap<>();
+        event.put("userID", Session.currentUserId);
+        event.put("title", mTitle);
+        event.put("startDate", cleanStartDate);
+        event.put("startTime", startTime);
+        event.put("endDate", cleanEndDate);
+        event.put("endTime", endTime);
+
+        checkConflictsThenSave(event, newStart, newEnd);
+    }
+
+
+    private void checkConflictsThenSave(Map<String, Object> event, LocalDateTime newStart, LocalDateTime newEnd) {
+
+        EventViewModel vm = new EventViewModel(this);
+
+        // Read through Events
+        vm.readEvents(events -> {
+
+            // Create a Conflict List
+            List<String> conflicts = new ArrayList<>();
+
+            // Create Formatting Templates for String Comparisons
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
+
+            // For each Event
+            for (Event e : events) {
+
+                // Get Start Dates and Times
+                LocalDate existingStartDate = LocalDate.parse(e.getStartDate(), dateFormatter);
+                LocalTime existingStartTime = LocalTime.parse(e.getStartTime(), timeFormatter);
+                LocalDateTime existingStart = LocalDateTime.of(existingStartDate, existingStartTime);
+
+
+                // Get End Dates and Times
+                LocalDate existingEndDate = LocalDate.parse(e.getEndDate(), dateFormatter);
+                LocalTime existingEndTime = LocalTime.parse(e.getEndTime(), timeFormatter);
+                LocalDateTime existingEnd = LocalDateTime.of(existingEndDate, existingEndTime);
+
+                // Check for Overlap
+                boolean overlaps = newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart);
+                if (overlaps) {
+                    // Add the Title of the Overlapping Event to the Conflicts List
+                    conflicts.add(e.getTitle());
+                }
+            }
+
+            // If there are conflicts
+            if (!conflicts.isEmpty()) {
+                // Display Conflict Dialog
+                showConflictDialog(conflicts, event);
+            }
+            // Otherwise
+            else {
+                // Save the Event
+                saveEvent(event);
+            }
+        });
+    }
+
+    private void saveEvent(Map<String, Object> event) {
+        EventViewModel vm = new EventViewModel(this);
+
+        // Add Event to Database
+        vm.addEvent(event, documentReference -> {
+
+            String eventId = documentReference.getId();
+
+            // Return to Monthly Calendar View
+            Intent intent = new Intent(this, activity_calendar_month.class);
+            intent.putExtra("EVENT_ID", eventId);
+
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void showConflictDialog(List<String> conflicts, Map<String, Object> event) {
+
+        // Begin Creating the Overlap Message
+        StringBuilder message = new StringBuilder();
+        message.append("This event overlaps with:\n\n");
+
+        // Add Title of Overlapping Events to Overlap Message
+        for (String title : conflicts) {
+            message.append("• ").append(title).append("\n");
+        }
+
+        // Add Last Section of Overlap Message
+        message.append("\nAdd anyway?");
+
+        new AlertDialog.Builder(this)
+                // Set Title and Message
+                .setTitle("Event Conflict")
+                .setMessage(message.toString())
+
+                // Allow users to add event anyways
+                .setPositiveButton("Add Event", (d, w) -> saveEvent(event))
+
+                // Allow users to not add the event
+                .setNegativeButton("Cancel", (d, w) -> d.dismiss())
+
+                // Display Dialog
+                .show();
     }
 }

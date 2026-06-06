@@ -1,46 +1,47 @@
 package com.example.EventCalendarMobileApplication.Calendar.Model;
-import android.content.Context;
 
-import com.example.EventCalendarMobileApplication.Calendar_Database;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class Event {
-    private Calendar_Database calendarDatabase;
-    private Context context;
 
-    public Event (Context context){
-        calendarDatabase = new Calendar_Database(context);
+    private String mEventID;
+    private String mUser_ID;
+    private String mTitleString;
+    private String mStartDate;
+    private String mStartTime;
+    private String mEndDate;
+    private String mEndTime;
+
+    public Event() {
+        // Required by Firestore
     }
 
-    public int mID;
-    public int mUser_ID;
-    public String mTitleString;
-    public LocalDate mStartDate;
-    public LocalDate mEndDate;
-    public LocalTime mStartTime;
-    public LocalTime mEndTime;
+    public Event(
+            String eventID,
+            String userID,
+            String title,
+            String startDate,
+            String startTime,
+            String endDate,
+            String endTime) {
 
-    public Event(int id, int userID, String title, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime){
-        mID = id;
-        mUser_ID = userID;
-        mTitleString = title;
-        mStartDate = startDate;
-        mStartTime = startTime;
-        mEndDate = endDate;
-        mEndTime = endTime;
+        this.mEventID = eventID;
+        this.mUser_ID = userID;
+        this.mTitleString = title;
+        this.mStartDate = startDate;
+        this.mStartTime = startTime;
+        this.mEndDate = endDate;
+        this.mEndTime = endTime;
     }
 
-
-    public int getID(){
-        return mID;
+    // getters and setters
+    public String getEventID(){
+        return mEventID;
     }
-    public void setID(int id){ this.mID = id; }
-    public int getUserID(){
+    public void setEventID(String eventID){ this.mEventID = eventID; }
+    public String getUserID(){
         return mUser_ID;
     }
-    public void setUserID(int userID){
+    public void setUserID(String userID){
         this.mUser_ID = userID;
     }
 
@@ -51,28 +52,28 @@ public class Event {
     public void setTitle(String title){
         this.mTitleString = title;
     }
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return mStartDate;
     }
-    public void setStartDate(LocalDate startDate){
+    public void setStartDate(String startDate){
         this.mStartDate = startDate;
     }
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return mEndDate;
     }
-    public void setEndDate(LocalDate endDate){
+    public void setEndDate(String endDate){
         this.mEndDate = endDate;
     }
-    public LocalTime getStartTime() {
+    public String getStartTime() {
         return mStartTime;
     }
-    public void setStartTime(LocalTime startTime){
+    public void setStartTime(String startTime){
         this.mStartTime = startTime;
     }
-    public LocalTime getEndTime() {
+    public String getEndTime() {
         return mEndTime;
     }
-    public void setEndTime(LocalTime endTime){
+    public void setEndTime(String endTime){
         this.mEndTime = endTime;
     }
 }

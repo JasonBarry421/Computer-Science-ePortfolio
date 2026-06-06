@@ -16,6 +16,7 @@ import com.example.EventCalendarMobileApplication.Calendar.Model.Event;
 import com.example.EventCalendarMobileApplication.R;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -89,8 +90,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             // Get List of Events that occur on each day
             for(Event e : events)
             {
-//                String eventDate = e.getStartDate();
-                LocalDate eventDate = e.getStartDate();
+                LocalDate eventDate =
+                        LocalDate.parse(
+                                e.getStartDate(),
+                                DateTimeFormatter.ofPattern("MMM dd, yyyy")
+                        );
 
                 if(Objects.equals(eventDate, date))
                 {

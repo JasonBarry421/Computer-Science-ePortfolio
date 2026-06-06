@@ -6,6 +6,7 @@ import static com.example.EventCalendarMobileApplication.Calendar.View.DailyCale
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -88,33 +89,35 @@ public class activity_calendar_daily extends AppCompatActivity implements DailyC
         updateDailyEvents();
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private void updateDailyEvents() {
+
         // Format Selected Date for String Comparisons
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
         String date = formatter.format(selectedDate);
 
         EventViewModel eventViewModel = new EventViewModel(this);
 
-        // Gets List of all Events for the Selected Date
-        ArrayList<Event> dailyEvents = eventViewModel.eventsForDate(date);
+        eventViewModel.eventsForDate(date, dailyEvents -> {
 
-        // Filters out all empty events
-        List<Event> filteredEvents = new ArrayList<>();
-        for (Event e : dailyEvents) {
-            if (e.getStartDate().equals(selectedDate)){
-                filteredEvents.add(e);
+            List<Event> filteredEvents = new ArrayList<>();
+
+            // Filters out all empty events
+            for(Event e : dailyEvents) {
+                if(e.getStartDate().equals(date)) {
+                    filteredEvents.add(e);
+                }
             }
-        }
 
-        // Sort Events by Start Time
-        filteredEvents.sort((e1, e2) -> {
-            LocalTime t1 = e1.getStartTime();
-            LocalTime t2 = e2.getStartTime();
-            return t1.compareTo(t2);
+            // Sort Events by Start Time
+            filteredEvents.sort((e1, e2) -> {
+                LocalTime t1 = LocalTime.parse(e1.getStartTime(), DateTimeFormatter.ofPattern("h:mm a"));
+                LocalTime t2 = LocalTime.parse(e2.getStartTime(), DateTimeFormatter.ofPattern("h:mm a"));
+                return t1.compareTo(t2);
+            });
+
+            adapter.setEvents(filteredEvents);
+
         });
-
-        adapter.setEvents(filteredEvents);
     }
 
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -152,13 +155,14 @@ public class activity_calendar_daily extends AppCompatActivity implements DailyC
                     Intent intent = new Intent(this, updateEventActivity.class);
 
                     // Puts Event Values in order to Auto Populate Update Event Activity
-                    intent.putExtra("EVENT_ID", selectedEvent.getID());
+                    intent.putExtra("EVENT_ID", selectedEvent.getEventID());
+                    Log.i("EVENT ID", selectedEvent.getEventID());
                     intent.putExtra("EVENT_USER_ID", selectedEvent.getUserID());
                     intent.putExtra("EVENT_TITLE", selectedEvent.getTitle());
-                    intent.putExtra("EVENT_START_TIME", selectedEvent.getStartTime().toString());
-                    intent.putExtra("EVENT_START_DATE", selectedEvent.getStartDate().toString());
-                    intent.putExtra("EVENT_END_TIME", selectedEvent.getEndTime().toString());
-                    intent.putExtra("EVENT_END_DATE", selectedEvent.getEndDate().toString());
+                    intent.putExtra("EVENT_START_TIME", selectedEvent.getStartTime());
+                    intent.putExtra("EVENT_START_DATE", selectedEvent.getStartDate());
+                    intent.putExtra("EVENT_END_TIME", selectedEvent.getEndTime());
+                    intent.putExtra("EVENT_END_DATE", selectedEvent.getEndDate());
 
                     // Go to Update Event Activity
                     startActivity(intent);

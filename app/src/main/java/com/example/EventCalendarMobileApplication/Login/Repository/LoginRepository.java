@@ -1,35 +1,46 @@
 package com.example.EventCalendarMobileApplication.Login.Repository;
 
-import android.content.Context;
-import com.example.EventCalendarMobileApplication.Calendar_Database;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class LoginRepository {
-    private static volatile LoginRepository instance;
-    private Calendar_Database calendarDatabase;
-    private Context context;
 
-    // Constructor
-    public LoginRepository(Context context) {
-        this.context = context;
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    public interface AuthCallback {
+        void onResult(boolean success);
     }
 
-    public int authenticateUser(String username, String password) {
-        calendarDatabase = new Calendar_Database(context);
-        return calendarDatabase.authenticateUser(username, password);
+    public void authenticateUser(String username, String password, AuthCallback callback) {
+        // Attempts to Login with the provided username and password
+        auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(task -> callback.onResult(task.isSuccessful()));
     }
 
-    public Boolean createAccount(String username, String password, String phoneNumber) {
+    public void createAccount(String username, String password, String phoneNumber, AuthCallback callback) {
 
-        Calendar_Database calendarDB = new Calendar_Database(context);
+        auth.createUserWithEmailAndPassword(username, password)
+                .addOnCompleteListener(task -> {
 
-        if (calendarDB.userExists(username, phoneNumber)) {
-            return false;
-        }
+                    if (!task.isSuccessful() || task.getResult() == null) {
+                        callback.onResult(false);
+                        return;
+                    }
+                    String uid = Objects.requireNonNull(task.getResult().getUser()).getUid();
 
-        calendarDB.addUsers(username, password, phoneNumber);
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("username", username);
+                    user.put("phoneNumber", phoneNumber);
 
-        calendarDB.close();
-
-        return true;
+                    db.collection("users")
+                            .document(uid)
+                            .set(user)
+                            .addOnCompleteListener(dbTask ->
+                                    callback.onResult(dbTask.isSuccessful()));
+                });
     }
 }

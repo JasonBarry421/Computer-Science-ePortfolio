@@ -60,7 +60,7 @@ public class DailyCalendarAdapter extends RecyclerView.Adapter<DailyCalendarView
         {
             for(Event e : events)
             {
-                LocalTime eventTime = e.getStartTime();
+                LocalTime eventTime = LocalTime.parse(e.getStartTime(), DateTimeFormatter.ofPattern("h:mm a"));
                 int startTimeHour = eventTime.getHour();
                 int currentHour = currentHourOfDay.getHour();
 
