@@ -16,17 +16,17 @@ Database management and security have also been recurring themes throughout the 
 
 In summation, the artifacts included within this ePortfolio collectively demonstrate my growth as a computer science student and aspiring software developer. The code review artifact provides an overview of the original Event Calendar application and identifies areas for improvement. The software engineering enhancement focuses on improving usability through interface design and feature expansion. The algorithms and data structures enhancement demonstrates problem-solving through conflict detection functionality. The database enhancement showcases modern cloud-based data management practices and considerations for security. Together, these artifacts illustrate how multiple areas of computer science work together to create effective software solutions. Therefore, the development of this ePortfolio has provided an opportunity to reflect on the knowledge, skills, and experiences gained throughout the Computer Science program. While each artifact highlights a specific area of computer science, together they demonstrate a broad foundation in software development, problem-solving, database management, security, and professional communication. These experiences have strengthened my confidence in my technical abilities and prepared me to continue developing my skills as I pursue opportunities within the computer science field.
 
-## Original Version of Project
+## Original Version of Project Link
 
-https://github.com/JasonBarry421/Computer-Science-ePortfolio/commit/a2f7e03
+[Original Version of Project Commit](https://github.com/JasonBarry421/Computer-Science-ePortfolio/commit/a2f7e03)
 
 ## Code Review - Video Link
 
 https://youtu.be/S9b4sGuwqLE
 
-## Original Enhancement Plan 
+## Original Enhancement Plan Link
 
-Capstone Project - Original Enhancement Plan.pdf
+[Capstone Project - Original Enhancement Plan.pdf](https://github.com/JasonBarry421/Computer-Science-ePortfolio/blob/042c5b28b7df9ab8e1f7f479cb45786d8e6f102a/Capstone%20Project%20-%20Original%20Enhancement%20Plan.pdf)
 
 ## Narrative - Software Engineering and Design Enhancement
 
