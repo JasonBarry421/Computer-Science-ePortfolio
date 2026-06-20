@@ -1,14 +1,14 @@
 # Computer-Science-ePortfolio
 
-# Original Version of Project
+## Original Version of Project
 
 https://github.com/JasonBarry421/Computer-Science-ePortfolio/commit/a2f7e03
 
-# Code Review - Video Link
+## Code Review - Video Link
 
 https://youtu.be/S9b4sGuwqLE
 
-# Narrative - Software Engineering and Design Enhancement
+## Narrative - Software Engineering and Design Enhancement
 
 This artifact is an enhanced version of the Event Calendar application originally developed as the final project for CS-360: Mobile Architecture and Programming. The original application was created in 2024 and was designed as a mobile calendar system that allowed users to create, view, and update scheduled events. The enhanced version expands upon the original implementation through improvements to the application’s user interface, event visualization system, and overall software structure. Most notably, the enhancement introduces a redesigned Monthly View capable of displaying multiple events per day as well as a new Daily View that provides detailed visualization and interaction with time-based event data.
 
@@ -23,7 +23,7 @@ tablish a clear mental model of the application represented the most significant
 
 
 
-# Narrative - Algorithms and Data Structure Enhancement
+## Narrative - Algorithms and Data Structure Enhancement
 
 This artifact is an enhanced version of the Event Calendar application originally developed as the final project for CS-360: Mobile Architecture and Programming. The original application was created in 2024 and was designed as a mobile calendar system that allowed users to create, view, and update scheduled event. For my algorithm enhancement, I implemented an algorithm that detects overlapping events during event creation or editing and provides a warning to the user, accordingly. The user then has the option of either adjusting the event times and dates or proceed with saving the event despite the overlap. 
 
@@ -35,7 +35,7 @@ Through the enhancement process, I developed a greater appreciation for the impo
 
 
 
-# Narrative - Databases
+## Narrative - Databases
 
 This artifact is an enhanced version of the Event Calendar application originally developed as the final project for CS-360: Mobile Architecture and Programming. The original application was created in 2024 and was designed as a mobile calendar system that allowed users to create, view, and update scheduled events. To enable these features, as well as provide support for multiple user accounts, the application used an SQLite database. Although SQLite provided a lightweight and reliable solution for local data storage, it had several limitations when applied to a more scalable, multi-user system.
 I selected this artifact because it provided an opportunity to improve both the functionality and security of the application's database architecture. Most notably, because SQLite is a file-based local storage system, the application's data was tied directly to a single device. As a result, uninstalling or resetting the application could lead to complete data loss, reducing reliability across multiple devices. To address these limitations, the application was altered to use Firebase Firestore, a cloud-based database solution. These changes also made future enhancements, such as email-triggered event updates, significantly easier to implement. This alteration also reduced the application’s exposure to traditional SQL injection vulnerabilities by replacing SQL-based queries with Firestore's document-based data model.
