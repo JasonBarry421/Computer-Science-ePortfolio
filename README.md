@@ -4,6 +4,17 @@
 
 [Event Calendar Application Repository](https://github.com/JasonBarry421/Computer-Science-ePortfolio)
 
+## Quick Links
+
+[Professional Self-Accessment](#professional-self-assessment)
+[Original Version of Project](#original-version-of-project)
+[Code Review - Video](#code-review-video)
+[Original Enhancement Plan](#original-enhancement-plan)
+[Narrative - Software Engineering and Design Enhancement](#narrative-software-engineering-and-design-enhancement)
+[Narrative - Algorithms and Data Structure Enhancement](#narrative-algorithms-and-data-structures-enhancement)
+[Narrative - Databases](#narrative-databases)
+
+
 ## Professional Self-Accessment
 
 Throughout my studies in Southern New Hampshire University's Computer Science program, I have developed a diverse set of technical and professional skills that have prepared me for a career in software development. The coursework completed throughout the program, combined with the development of this ePortfolio, has allowed me to strengthen my abilities in software design, programming, database management, security, and problem-solving. The process of creating and enhancing the artifacts within this portfolio provided an opportunity to reflect on the knowledge and skills gained throughout the program while demonstrating my ability to apply those concepts in practical software development projects.
@@ -20,15 +31,15 @@ Database management and security have also been recurring themes throughout the 
 
 In summation, the artifacts included within this ePortfolio collectively demonstrate my growth as a computer science student and aspiring software developer. The code review artifact provides an overview of the original Event Calendar application and identifies areas for improvement. The software engineering enhancement focuses on improving usability through interface design and feature expansion. The algorithms and data structures enhancement demonstrates problem-solving through conflict detection functionality. The database enhancement showcases modern cloud-based data management practices and considerations for security. Together, these artifacts illustrate how multiple areas of computer science work together to create effective software solutions. Therefore, the development of this ePortfolio has provided an opportunity to reflect on the knowledge, skills, and experiences gained throughout the Computer Science program. While each artifact highlights a specific area of computer science, together they demonstrate a broad foundation in software development, problem-solving, database management, security, and professional communication. These experiences have strengthened my confidence in my technical abilities and prepared me to continue developing my skills as I pursue opportunities within the computer science field.
 
-## Original Version of Project Link
+## Original Version of Project
 
 [Original Version of Project Commit](https://github.com/JasonBarry421/Computer-Science-ePortfolio/commit/a2f7e03)
 
-## Code Review - Video Link
+## Code Review - Video
 
 [Code Review](https://youtu.be/S9b4sGuwqLE)
 
-## Original Enhancement Plan Link
+## Original Enhancement Plan
 
 [Capstone Project - Original Enhancement Plan.pdf](https://github.com/JasonBarry421/Computer-Science-ePortfolio/blob/042c5b28b7df9ab8e1f7f479cb45786d8e6f102a/Capstone%20Project%20-%20Original%20Enhancement%20Plan.pdf)
 
@@ -47,7 +58,7 @@ tablish a clear mental model of the application represented the most significant
 
 
 
-## Narrative - Algorithms and Data Structure Enhancement
+## Narrative - Algorithms and Data Structures Enhancement
 
 This artifact is an enhanced version of the Event Calendar application originally developed as the final project for CS-360: Mobile Architecture and Programming. The original application was created in 2024 and was designed as a mobile calendar system that allowed users to create, view, and update scheduled event. For my algorithm enhancement, I implemented an algorithm that detects overlapping events during event creation or editing and provides a warning to the user, accordingly. The user then has the option of either adjusting the event times and dates or proceed with saving the event despite the overlap. 
 
