@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CS360-Final Project</string>
+    <string name="app_name">Event Calendar Application</string>
     <string name="calendarLeftButton"><![CDATA[<-]]></string>
     <string name="calendarRightButton"><![CDATA[->]]></string>
     <string name="saturdayAndSundayAbbreviation">S</string>
@@ -74,6 +74,10 @@
     <string name="save">SAVE</string>
     <string name="add_event">Add Event</string>
     <string name="delete_event_button">Delete Event Button</string>
+    <string name="EditMenuButton">Edit</string>
+    <string name="editButtonText">Edit</string>
+    <string name="deleteButtonText">Delete</string>
+    <string name="deleteMenuButton">deleteMenuButton</string>
 
     <string-array name="repeat_options">
         <item>Does not repeat</item>

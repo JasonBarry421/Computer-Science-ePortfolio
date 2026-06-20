@@ -3,7 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/saveButtonSymbol"
+        android:id="@+id/deleteMenuButton"
+        android:title="@string/deleteButtonText"
+        app:actionLayout="@layout/delete_button_layout"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/saveButtonSymbolInEditLayout"
         android:title="@string/saveButtonTitle"
         app:actionLayout="@layout/save_button_layout"
         app:showAsAction="always"

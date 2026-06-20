@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CS360 Final Project by Jason Barry"
+rootProject.name = "Event Calendar Mobile Application"
 include(":app")
  

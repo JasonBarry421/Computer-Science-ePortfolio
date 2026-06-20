@@ -7,8 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity_calendar_month"
-
+    tools:context=".Calendar.View.activity_calendar_month"
 
     style="@style/primaryBackground"
     tools:ignore="DiscouragedApi">
@@ -20,15 +19,14 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="00dp">
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="0dp">
 
         <Button
             android:id="@+id/previousMonthButton"
-            android:layout_width="0sp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_weight="1"
             android:text="@string/calendarLeftButton"
             android:onClick="previousMonthClick"
@@ -37,7 +35,7 @@
 
         <TextView
             android:id="@+id/monthAndYear"
-            android:layout_width="0sp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="September 2024"
@@ -48,7 +46,7 @@
 
         <Button
             android:id="@+id/nextMonthButton"
-            android:layout_width="0sp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -61,10 +59,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/BottomLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TopLinearLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="45dp">
         <TextView
@@ -129,32 +129,18 @@
             android:textColor="@color/gray"
             android:textAlignment="center"
             android:textSize="16sp"/>
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="75dp"/>
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/eventRecyclerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_marginTop="75dp"/>-->
-
-    <ListView
-        android:id="@+id/eventListView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        android:theme="@style/BarBackgroundColor"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/BottomLinearLayout"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="630dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <ImageButton
         android:id="@+id/AddEventButton"
@@ -166,16 +152,5 @@
         android:src="@drawable/ic_circle_with_plus_sign"
         android:contentDescription="@drawable/ic_circle_with_plus_sign"
         android:background="@color/transparent" />
-
-    <ImageButton
-        android:id="@+id/deleteEventButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="@string/delete_event_button"
-        android:src="@drawable/cancel_button"
-        android:background="@color/transparent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
