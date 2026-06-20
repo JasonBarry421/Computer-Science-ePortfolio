@@ -6,7 +6,7 @@
 
 ## Quick Links
 
-[Professional Self-Accessment](#professional-self-accessment)
+[Professional Self-Assessment](#professional-self-assessment)
 
 [Original Version of Project](#original-version-of-project)
 
@@ -21,7 +21,7 @@
 [Narrative - Databases](#narrative---databases)
 
 
-## Professional Self-Accessment
+## Professional Self-Assessment
 
 Throughout my studies in Southern New Hampshire University's Computer Science program, I have developed a diverse set of technical and professional skills that have prepared me for a career in software development. The coursework completed throughout the program, combined with the development of this ePortfolio, has allowed me to strengthen my abilities in software design, programming, database management, security, and problem-solving. The process of creating and enhancing the artifacts within this portfolio provided an opportunity to reflect on the knowledge and skills gained throughout the program while demonstrating my ability to apply those concepts in practical software development projects.
 
