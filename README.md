@@ -6,19 +6,19 @@
 
 ## Quick Links
 
-[Professional Self-Accessment](#professional-self-assessment)
+[Professional Self-Accessment](#professional-self-accessment)
 
 [Original Version of Project](#original-version-of-project)
 
-[Code Review - Video](#code-review-video)
+[Code Review - Video](#code-review---video)
 
 [Original Enhancement Plan](#original-enhancement-plan)
 
-[Narrative - Software Engineering and Design Enhancement](#narrative-software-engineering-and-design-enhancement)
+[Narrative - Software Engineering and Design Enhancement](#narrative---software-engineering-and-design-enhancement)
 
-[Narrative - Algorithms and Data Structure Enhancement](#narrative-algorithms-and-data-structures-enhancement)
+[Narrative - Algorithms and Data Structure Enhancement](#narrative---algorithms-and-data-structures-enhancement)
 
-[Narrative - Databases](#narrative-databases)
+[Narrative - Databases](#narrative---databases)
 
 
 ## Professional Self-Accessment
