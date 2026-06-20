@@ -28,6 +28,10 @@ In summation, the artifacts included within this ePortfolio collectively demonst
 
 [Capstone Project - Original Enhancement Plan.pdf](https://github.com/JasonBarry421/Computer-Science-ePortfolio/blob/042c5b28b7df9ab8e1f7f479cb45786d8e6f102a/Capstone%20Project%20-%20Original%20Enhancement%20Plan.pdf)
 
+## Post Enhancements - EPortfolio Repository
+
+[Event Calendar Application Repository](https://github.com/JasonBarry421/Computer-Science-ePortfolio)
+
 ## Narrative - Software Engineering and Design Enhancement
 
 This artifact is an enhanced version of the Event Calendar application originally developed as the final project for CS-360: Mobile Architecture and Programming. The original application was created in 2024 and was designed as a mobile calendar system that allowed users to create, view, and update scheduled events. The enhanced version expands upon the original implementation through improvements to the application’s user interface, event visualization system, and overall software structure. Most notably, the enhancement introduces a redesigned Monthly View capable of displaying multiple events per day as well as a new Daily View that provides detailed visualization and interaction with time-based event data.
