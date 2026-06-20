@@ -16,7 +16,7 @@
 
 [Narrative - Software Engineering and Design Enhancement](#narrative---software-engineering-and-design-enhancement)
 
-[Narrative - Algorithms and Data Structure Enhancement](#narrative---algorithms-and-data-structures-enhancement)
+[Narrative - Algorithms and Data Structures Enhancement](#narrative---algorithms-and-data-structures-enhancement)
 
 [Narrative - Databases](#narrative---databases)
 
