@@ -1,5 +1,9 @@
 # Computer-Science-ePortfolio
 
+## Source Code Repository
+
+[Event Calendar Application Repository](https://github.com/JasonBarry421/Computer-Science-ePortfolio)
+
 ## Professional Self-Accessment
 
 Throughout my studies in Southern New Hampshire University's Computer Science program, I have developed a diverse set of technical and professional skills that have prepared me for a career in software development. The coursework completed throughout the program, combined with the development of this ePortfolio, has allowed me to strengthen my abilities in software design, programming, database management, security, and problem-solving. The process of creating and enhancing the artifacts within this portfolio provided an opportunity to reflect on the knowledge and skills gained throughout the program while demonstrating my ability to apply those concepts in practical software development projects.
@@ -27,10 +31,6 @@ In summation, the artifacts included within this ePortfolio collectively demonst
 ## Original Enhancement Plan Link
 
 [Capstone Project - Original Enhancement Plan.pdf](https://github.com/JasonBarry421/Computer-Science-ePortfolio/blob/042c5b28b7df9ab8e1f7f479cb45786d8e6f102a/Capstone%20Project%20-%20Original%20Enhancement%20Plan.pdf)
-
-## Post Enhancements - EPortfolio Repository
-
-[Event Calendar Application Repository](https://github.com/JasonBarry421/Computer-Science-ePortfolio)
 
 ## Narrative - Software Engineering and Design Enhancement
 
