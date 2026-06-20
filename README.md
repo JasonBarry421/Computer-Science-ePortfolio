@@ -22,7 +22,7 @@ In summation, the artifacts included within this ePortfolio collectively demonst
 
 ## Code Review - Video Link
 
-https://youtu.be/S9b4sGuwqLE
+[Code Review](https://youtu.be/S9b4sGuwqLE)
 
 ## Original Enhancement Plan Link
 
